@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="index.html">Bravo Planner</a></h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="dashboard.html" class="currentPage">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <main id="wrapper">
+
+        <h2>Your Dashboard</h2>
+        <p>Select an action below to start working with your schedule.</p>
+
+        <section class="dash-grid">
+
+            <!-- 1. View schedule -->
+            <div class="dash-card">
+                <h3>View Your Schedule</h3>
+
+                <form>
+                    <label for="viewOption">Choose a range:</label>
+                    <select id="viewOption" name="viewOption">
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+
+                    <input type="submit" value="View">
+                </form>
+            </div>
+
+            <!-- 2. Create schedule -->
+            <div class="dash-card">
+                <h3>Create a Schedule</h3>
+
+                <form>
+                    <label for="createType">Schedule type:</label>
+                    <select id="createType" name="createType">
+                        <option value="classes">Classes</option>
+                        <option value="work">Work</option>
+                        <option value="study">Study Time</option>
+                        <option value="personal">Personal</option>
+                    </select>
+
+                    <input type="submit" value="Create">
+                </form>
+            </div>
+
+            <!-- 3. Notes -->
+            <div class="dash-card">
+                <h3>Quick Notes</h3>
+
+                <form>
+                    <label for="note">Write a note:</label>
+                    <textarea id="note" rows="3" placeholder="Example: Study for exam on Friday."></textarea>
+
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2025 Bravo Team
+            <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
+        </p>
+    </footer>
+
+</body>
+
+</html>
