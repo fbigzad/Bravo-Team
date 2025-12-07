@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <meta name="description" content="Sign up page for Bravo Planner">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!--Site header-->
+    <header>
+        <h1><a href="index.html">Bravo Planner</a></h1>
+    </header>
+
+    <nav>
+        <ul>
+            <!-- For site navigation-->
+            <li><a href="signUp.html" class="currentPage">Sign Up</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <main id="wrapper">
+
+        <h2>Welcome to your Schedule Planner</h2>
+
+        <p>This is the login page for the Schedule Planner. Please enter your User ID and Password to access your
+            schedule.
+
+        <section>
+
+            <h2>Sign Up</h2>
+
+
+            <form id="loginForm" action="#" method="get">
+
+                <label for="myUserID">*User ID:</label>
+                <input type="text" name="User_ID" id="myUserID" required>
+
+                <label for="myPassword">*Password:</label>
+                <input type="password" name="Password" id="myPassword" required>
+
+                <input type="submit" value="Submit" id="mySubmit">
+
+            </form>
+
+            <script>
+                document.getElementById("loginForm").addEventListener("submit", function (event) {
+                    alert("Thank you for your submission, someone will contact your shortly!")
+                });
+            </script>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2025 Bravo Team
+            <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
+        </p>
+    </footer>
+
+</body>
+
+</html>
