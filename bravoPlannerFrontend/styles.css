@@ -413,12 +413,36 @@ Change the styles if the screen exceeds 1024px
             font-size: 1.2em;
         }
 
+         #signupForm {
+            width: 600px;        
+            padding: 30px;        
+            margin: 50px auto;   
+            font-size: 1.2em;      
+        }
+
+        #signupForm label {
+            font-size: 1.5em;     
+        }
+
+        #signupForm input[type="text"],
+        #signupForm input[type="email"],
+        #signupForm input[type="password"] {
+            font-size: 1.2em;
+            padding: 12px;
+        }
+
+        #signupForm input[type="submit"],
+        #signupForm button {
+            width: 200px;
+            padding: 15px;
+            font-size: 1.2em;
+        }
+
         .button-group {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
         }
-
 
         #wrapper h2 {
             padding-top: 1em;
