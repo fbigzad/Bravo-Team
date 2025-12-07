@@ -162,6 +162,56 @@ footer a {text-decoration: none;}
 #loginForm button:hover {
     background-color: rgb(47, 86, 194);
 }
+/* Signup form — same styling as login form */
+#signupForm {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Signup button */
+#signupForm input[type="submit"],
+#signupForm button {
+    width: 150px;
+    margin: 10px auto 0;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(35, 53, 196);
+    color: white;
+    font-size: 1em;
+}
+
+/* Hover */
+#signupForm input[type="submit"]:hover,
+#signupForm button:hover {
+    background-color: rgb(47, 86, 194);
+}
+
+/* Labels */
+#signupForm label {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+/* Inputs */
+#signupForm input[type="text"],
+#signupForm input[type="email"],
+#signupForm input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
 input, textarea {
     margin-bottom: .5em;
 }
