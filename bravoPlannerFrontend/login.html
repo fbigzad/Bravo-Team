@@ -54,9 +54,10 @@
 
             </form>
 
+            <!-- Redirect to Signup Page on create account button -->
             <script>
-                document.getElementById("loginForm").addEventListener("submit", function (event) {
-                    alert("Thank you for your submission, someone will contact your shortly!")
+                document.getElementById("openSignup").addEventListener("click", function () {
+                    window.location.href = "signup.html";
                 });
             </script>
 
