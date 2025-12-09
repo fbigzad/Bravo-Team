@@ -33,7 +33,8 @@
             <div class="dash-card">
                 <h3>View Your Schedule</h3>
 
-                <form>
+                <!-- added action="calendar.html" -->
+                <form action="calendar.html" method="get">
                     <label for="viewOption">Choose a range:</label>
                     <select id="viewOption" name="viewOption">
                         <option value="today">Today</option>
@@ -49,7 +50,8 @@
             <div class="dash-card">
                 <h3>Create a Schedule</h3>
 
-                <form>
+                <!-- added action="createSchedule.html" -->
+                <form action="createSchedule.html" method="get">
                     <label for="createType">Schedule type:</label>
                     <select id="createType" name="createType">
                         <option value="classes">Classes</option>
@@ -66,6 +68,7 @@
             <div class="dash-card">
                 <h3>Quick Notes</h3>
 
+                <!-- Notes can remain empty for now / backend team -->
                 <form>
                     <label for="note">Write a note:</label>
                     <textarea id="note" rows="3" placeholder="Example: Study for exam on Friday."></textarea>
