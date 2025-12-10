@@ -331,7 +331,7 @@ Change the styles if the screen exceeds 600px
        /* This styles the footers on the calendar pages */
         .table-footer {
             margin-top: 1rem;
-            font-size: 1.1em;
+            font-size: 1.5em;
         }
 }
 
