@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bravo Planner - Weekly Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Site header -->
+    <header>
+        <h1>Bravo Planner</h1>
+    </header>
+
+    <!-- Same nav as other pages -->
+    <nav>
+        <ul>
+            <li><a href="signUp.html">Sign Up</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="calendarDailyView.html">Calendar Daily View</a></li>
+            <li><a href="calendarWeeklyView.html" class="currentPage">Calendar Weekly View</a></li>
+            <li><a href="calendarMonthlyView.html">Calendar Monthly View</a></li>
+        </ul>
+    </nav>
+
+    <main id="wrapper">
+
+        <h2>Your Schedule</h2>
+        <p>This page shows an example weekly view of your schedule. Later, the backend will fill this with your real
+            classes and events.</p>
+
+        <!-- Range info -->
+        <section class="dash-card" style="max-width: 900px; margin: 0 auto 2rem auto;">
+            <h3>Current View</h3>
+            <p>
+                You selected a range from the dashboard (Today / This Week / This Month).
+                For now this is a static example for design purposes.
+            </p>
+        </section>
+
+        <!-- Weekly calendar table -->
+        <section class="dash-card" style="max-width: 1000px; margin: 0 auto;">
+            <h3>Weekly Calendar</h3>
+
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>8:00 – 10:00</td>
+                        <td id="mon-8"></td>
+                        <td id="tue-8"></td>
+                        <td id="wed-8"></td>
+                        <td id="thu-8"></td>
+                        <td id="fri-8"></td>
+                    </tr>
+                    <tr>
+                        <td>10:00 – 12:00</td>
+                        <td id="mon-10"></td>
+                        <td id="tue-10"></td>
+                        <td id="wed-10"></td>
+                        <td id="thu-10"></td>
+                        <td id="fri-10"></td>
+                    </tr>
+                    <tr>
+                        <td>1:00 – 3:00</td>
+                        <td id="mon-1"></td>
+                        <td id="tue-1"></td>
+                        <td id="wed-1"></td>
+                        <td id="thu-1"></td>
+                        <td id="fri-1"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top:1rem;">
+                <a href="createSchedule.html">+ Add a new schedule item</a> |
+                <a href="dashboard.html">Back to Dashboard</a>
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2025 Bravo Team
+            <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
+        </p>
+    </footer>
+
+</body>
+
+</html>
