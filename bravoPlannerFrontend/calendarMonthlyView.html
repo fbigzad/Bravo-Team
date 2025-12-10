@@ -14,6 +14,8 @@
         <h1>Bravo Planner</h1>
     </header>
 
+    <!-- This navigation bar is only for testing purposes
+            it will be removed in the final product -->
     <nav>
         <ul>
             <li><a href="signUp.html">Sign Up</a></li>
@@ -26,10 +28,9 @@
     </nav>
 
     <main id="wrapper">
-        <h2>Monthly Calendar View</h2>
-        <p>This is a visual test of the monthly calendar layout. Backend will populate real data later.</p>
+        <h2>Your Monthly Schedule</h2>
 
-        <section class="dash-card" style="max-width: 1000px; margin: 0 auto;">
+        <section class="dash-card monthlyCalendar">
             <h3 id="month-title">Month Name</h3>
 
             <table class="calendar-table">
@@ -49,11 +50,15 @@
                 </tbody>
             </table>
 
-            <div style="margin-top: 1rem;">
+            <div class="calendar-navMonthly">
                 <button onclick="previousMonth()">Previous</button>
                 <button onclick="nextMonth()">Next</button>
             </div>
         </section>
+
+        <p class="table-footer">
+            <a href="dashboard.html">Back to Dashboard</a>
+        </p>
 
     </main>
 

@@ -256,6 +256,19 @@ in the middle of the webpage*/
             font-size: 0.8em;
         }
 
+        /* Styles the calendar on the monthly view page */
+        .monthlyCalendar {
+        max-width: 1000px;
+        margin: 0 auto;
+        }
+
+        /*Styles the bottom navigation on cal*/
+        .calendar-navMonthly {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+
 
 /*
 //////////////////////////////////////////////////////////////////////////////////////// 
