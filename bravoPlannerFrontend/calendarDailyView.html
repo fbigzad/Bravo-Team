@@ -10,10 +10,20 @@
 
 <body>
 
+    <!-- =======================
+         Header section
+         Static header for all pages
+    ======================== -->
     <header>
         <h1>Bravo Planner</h1>
     </header>
 
+    <!-- =======================
+         Navigation bar
+         Links to main pages
+         The "currentPage" class highlights the page currently open
+         Backend does not need to touch this
+    ======================== -->
     <nav>
         <ul>
             <li><a href="signUp.html">Sign Up</a></li>
@@ -21,19 +31,32 @@
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="calendarDailyView.html" class="currentPage">Calendar Daily View</a></li>
             <li><a href="calendarWeeklyView.html">Calendar Weekly View</a></li>
-            <li><a href="calendarMonthlyView.html">Calendar Monthly View</a></li </ul>
+            <li><a href="calendarMonthlyView.html">Calendar Monthly View</a></li>
+        </ul>
     </nav>
 
     <main id="wrapper">
 
         <h2>Your Daily Schedule</h2>
 
+        <!-- =======================
+             Today's Date Section
+             "dash-card" gives dashboard card styling
+             "dailyCalendarDate" is specific for daily calendar date display
+             Backend can dynamically update #current-date with today's date
+        ======================== -->
         <section class="dash-card dailyCalendarDate">
             <h3>Today's Date</h3>
-            <p id="current-date">Wednesday, December 10, 2025</p>
+            <!-- Backend should replace this static date with the current date -->
+            <p id="current-date">Wednesday, December 10, 2025 - backend will replace this with current date</p>
         </section>
 
-        <!-- Daily schedule table -->
+        <!-- =======================
+             Daily Schedule Table
+             "dash-card" gives dashboard card styling
+             "dailyCalendar" is specific for daily calendar table styling
+             Backend will populate the table cells with events for each hour
+        ======================== -->
         <section class="dash-card dailyCalendar">
             <h3>Time Slots</h3>
 
@@ -46,6 +69,8 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Each row represents one hourly time slot -->
+                        <!-- Backend will inject events into the corresponding <td> by ID -->
                         <tr>
                             <td>8:00 – 9:00</td>
                             <td id="hour-8"></td>
@@ -86,14 +111,22 @@
                 </table>
             </div>
 
+            <!-- =======================
+                 Footer link for navigation
+                 Static link back to Dashboard
+            ======================== -->
             <p class="table-footer">
-                ` <a href="dashboard.html">Back to Dashboard</a>
+                <a href="dashboard.html">Back to Dashboard</a>
             </p>
 
         </section>
 
     </main>
 
+    <!-- =======================
+         Footer section
+         Static footer for all pages
+    ======================== -->
     <footer>
         <p>Copyright &copy; 2025 Bravo Team
             <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
