@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bravo Planner - Monthly Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Bravo Planner</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="signUp.html">Sign Up</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="calendarDailyView.html">Calendar Daily View</a></li>
+            <li><a href="calendarWeeklyView.html">Calendar Weekly View</a></li>
+            <li><a href="calendarMonthlyView.html" class="currentPage">Calendar Monthly View</a></li>
+        </ul>
+    </nav>
+
+    <main id="wrapper">
+        <h2>Monthly Calendar View</h2>
+        <p>This is a visual test of the monthly calendar layout. Backend will populate real data later.</p>
+
+        <section class="dash-card" style="max-width: 1000px; margin: 0 auto;">
+            <h3 id="month-title">Month Name</h3>
+
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody id="calendar-body">
+                    <!-- JS will generate rows and cells -->
+                </tbody>
+            </table>
+
+            <div style="margin-top: 1rem;">
+                <button onclick="previousMonth()">Previous</button>
+                <button onclick="nextMonth()">Next</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 Bravo Team
+            <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
+        </p>
+    </footer>
+
+    <!-- ======================== -->
+    <!--      JAVASCRIPT AREA     -->
+    <!-- ======================== -->
+
+    /* Simple JS to render a basic monthly calendar layout */
+
+    <script>
+        let currentDate = new Date();
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            document.getElementById("month-title").textContent =
+                currentDate.toLocaleString("default", { month: "long" }) + " " + year;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            const calendarBody = document.getElementById("calendar-body");
+            calendarBody.innerHTML = "";
+
+            let dateNum = 1;
+
+            for (let row = 0; row < 6; row++) {
+                let tr = document.createElement("tr");
+
+                for (let col = 0; col < 7; col++) {
+                    let td = document.createElement("td");
+
+                    if (row === 0 && col < firstDay) {
+                        td.innerHTML = ""; // empty before month starts
+                    } else if (dateNum > daysInMonth) {
+                        td.innerHTML = ""; // after month ends
+                    } else {
+                        td.id = "day-" + dateNum;
+
+                        td.innerHTML = `<span class="day-number">${dateNum}</span>`;
+
+                        dateNum++;
+                    }
+
+                    tr.appendChild(td);
+                }
+
+                calendarBody.appendChild(tr);
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+            addTestEvents(); // reapply fake events
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+            addTestEvents(); // reapply fake events
+        }
+
+        // ===========================
+        //   Fake events for testing
+        // ===========================
+        function addTestEvents() {
+            const sampleEvents = [
+                { day: 3, title: "Math Test" },
+                { day: 8, title: "Project Meeting" },
+                { day: 14, title: "Doctor Appointment" },
+                { day: 14, title: "Work Shift" },
+                { day: 20, title: "Quiz" },
+                { day: 26, title: "Birthday!" }
+            ];
+
+            sampleEvents.forEach(ev => {
+                const cell = document.getElementById(`day-${ev.day}`);
+                if (cell) {
+                    let div = document.createElement("div");
+                    div.className = "event";
+                    div.textContent = ev.title;
+                    cell.appendChild(div);
+                }
+            });
+        }
+
+        // Initial load
+        renderCalendar();
+        addTestEvents();
+    </script>
+
+</body>
+
+</html>

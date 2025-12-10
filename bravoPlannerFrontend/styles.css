@@ -219,6 +219,43 @@ in the middle of the webpage*/
     width: 100%;
     height: auto;
 }
+/* ================= Calendar Styles for the monthly calendar view ================= */
+
+ /* This styles the calendar for the montly view */
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .calendar-table th,
+        .calendar-table td {
+            border: 1px solid #ccc;
+            width: 14.2%;
+            height: 90px;
+            vertical-align: top;
+            padding: 4px;
+        }
+
+        .calendar-table td {
+            background: #f9f9f9;
+        }
+
+        .calendar-table td span.day-number {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .event {
+            background: #cce5ff;
+            padding: 2px 4px;
+            margin-top: 2px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
 
 /*
 //////////////////////////////////////////////////////////////////////////////////////// 
@@ -290,7 +327,6 @@ Change the styles if the screen exceeds 600px
        #wrapper p {
         line-height: 1.8;
        }
-
 }
 
 /*
