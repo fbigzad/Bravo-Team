@@ -262,12 +262,21 @@ in the middle of the webpage*/
         margin: 0 auto;
         }
 
-        /*Styles the bottom navigation on cal*/
+        /* Styles the bottom buttons on the monthly calendar */
         .calendar-navMonthly {
             text-align: center;
             margin-top: 1rem;
         }
-        
+
+        .dailyCalendar {
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+
+        .dailyCalendarDate {
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
 
 /*
