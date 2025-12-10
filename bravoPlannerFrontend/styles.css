@@ -327,6 +327,12 @@ Change the styles if the screen exceeds 600px
        #wrapper p {
         line-height: 1.8;
        }
+
+       /* This styles the footers on the calendar pages */
+        .table-footer {
+            margin-top: 1rem;
+            font-size: 1.1em;
+        }
 }
 
 /*
