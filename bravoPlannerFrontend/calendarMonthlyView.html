@@ -72,66 +72,105 @@
     <!--      JAVASCRIPT AREA     -->
     <!-- ======================== -->
 
-    /* Simple JS to render a basic monthly calendar layout */
-
     <script>
+        // ===========================
+        //    CURRENT DATE SETUP
+        // ===========================
+        // 'currentDate' keeps track of the month being displayed.
+        // This is updated when the user clicks Previous/Next month buttons.
         let currentDate = new Date();
 
+        // ===========================
+        //    FUNCTION: renderCalendar
+        // ===========================
+        // Renders the calendar for the current month.
+        // Creates table rows and cells dynamically and assigns each day a unique ID.
         function renderCalendar() {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
 
+            // Update the header with the month name and year
             document.getElementById("month-title").textContent =
                 currentDate.toLocaleString("default", { month: "long" }) + " " + year;
 
+            // Determine first day of the month (0 = Sunday, 6 = Saturday)
             const firstDay = new Date(year, month, 1).getDay();
+
+            // Determine the number of days in the month
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
             const calendarBody = document.getElementById("calendar-body");
+
+            // Clear any existing rows before rendering
             calendarBody.innerHTML = "";
 
             let dateNum = 1;
 
+            // Create 6 rows (weeks) to cover all possible month layouts
             for (let row = 0; row < 6; row++) {
                 let tr = document.createElement("tr");
 
                 for (let col = 0; col < 7; col++) {
                     let td = document.createElement("td");
 
+                    // Fill empty cells before the first day of the month
                     if (row === 0 && col < firstDay) {
-                        td.innerHTML = ""; // empty before month starts
-                    } else if (dateNum > daysInMonth) {
-                        td.innerHTML = ""; // after month ends
-                    } else {
+                        td.innerHTML = "";
+                    }
+                    // Fill empty cells after the last day of the month
+                    else if (dateNum > daysInMonth) {
+                        td.innerHTML = "";
+                    }
+                    // Fill the day cells
+                    else {
+                        // Assign a unique ID for each day, e.g., day-1, day-2, etc.
                         td.id = "day-" + dateNum;
 
+                        // Add the day number inside the cell
                         td.innerHTML = `<span class="day-number">${dateNum}</span>`;
 
+                        // Increment date counter
                         dateNum++;
                     }
 
+                    // Append the cell to the current row
                     tr.appendChild(td);
                 }
 
+                // Append the row to the table body
                 calendarBody.appendChild(tr);
             }
         }
 
+        // ===========================
+        //    NAVIGATION FUNCTIONS
+        // ===========================
+        // Update current month and re-render the calendar
         function previousMonth() {
             currentDate.setMonth(currentDate.getMonth() - 1);
             renderCalendar();
-            addTestEvents(); // reapply fake events
+
+            // ====== BACKEND INTEGRATION POINT ======
+            // Replace the following test function call with a backend call
+            // that fetches real events for the displayed month.
+            addTestEvents();
         }
 
         function nextMonth() {
             currentDate.setMonth(currentDate.getMonth() + 1);
             renderCalendar();
-            addTestEvents(); // reapply fake events
+
+            // ====== BACKEND INTEGRATION POINT ======
+            // Replace the following test function call with a backend call
+            // that fetches real events for the displayed month.
+            addTestEvents();
         }
 
         // ===========================
-        //   Fake events for testing
+        //    FAKE EVENTS FOR TESTING
         // ===========================
+        // This function is only for front-end testing purposes.
+        // Backend should replace this logic with actual event data.
         function addTestEvents() {
             const sampleEvents = [
                 { day: 3, title: "Math Test" },
@@ -146,14 +185,18 @@
                 const cell = document.getElementById(`day-${ev.day}`);
                 if (cell) {
                     let div = document.createElement("div");
-                    div.className = "event";
+                    div.className = "event"; // styling class for events
                     div.textContent = ev.title;
                     cell.appendChild(div);
                 }
             });
         }
 
-        // Initial load
+        // ===========================
+        //    INITIAL CALENDAR LOAD
+        // ===========================
+        // Render the calendar and populate with test events on page load.
+        // Backend should replace 'addTestEvents()' with a call to fetch real events.
         renderCalendar();
         addTestEvents();
     </script>
