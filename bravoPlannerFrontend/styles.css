@@ -267,12 +267,12 @@ in the middle of the webpage*/
             text-align: center;
             margin-top: 1rem;
         }
-
+        /* Styles the calendar on the daily view page */
         .dailyCalendar {
             max-width: 600px;
             margin: 1rem auto;
         }
-
+        /* Styles the date header on the daily calendar page */
         .dailyCalendarDate {
             max-width: 600px;
             margin: 0 auto;

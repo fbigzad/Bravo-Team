@@ -154,7 +154,7 @@
             // ====== BACKEND INTEGRATION POINT ======
             // Replace the following test function call with a backend call
             // that fetches real events for the displayed month.
-            addTestEvents();
+            // addTestEvents();
         }
 
         function nextMonth() {
@@ -164,33 +164,7 @@
             // ====== BACKEND INTEGRATION POINT ======
             // Replace the following test function call with a backend call
             // that fetches real events for the displayed month.
-            addTestEvents();
-        }
-
-        // ===========================
-        //    FAKE EVENTS FOR TESTING
-        // ===========================
-        // This function is only for front-end testing purposes.
-        // Backend should replace this logic with actual event data.
-        function addTestEvents() {
-            const sampleEvents = [
-                { day: 3, title: "Math Test" },
-                { day: 8, title: "Project Meeting" },
-                { day: 14, title: "Doctor Appointment" },
-                { day: 14, title: "Work Shift" },
-                { day: 20, title: "Quiz" },
-                { day: 26, title: "Birthday!" }
-            ];
-
-            sampleEvents.forEach(ev => {
-                const cell = document.getElementById(`day-${ev.day}`);
-                if (cell) {
-                    let div = document.createElement("div");
-                    div.className = "event"; // styling class for events
-                    div.textContent = ev.title;
-                    cell.appendChild(div);
-                }
-            });
+            // addTestEvents(); Replace with real backend call
         }
 
         // ===========================
@@ -199,7 +173,7 @@
         // Render the calendar and populate with test events on page load.
         // Backend should replace 'addTestEvents()' with a call to fetch real events.
         renderCalendar();
-        addTestEvents();
+        // addTestEvents(); Replace with real backend call
     </script>
 
 </body>
