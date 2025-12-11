@@ -4,17 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bravo Planner - Calendar</title>
+    <title>Bravo Planner - Weekly Calendar</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <!-- Site header -->
+
+    <!-- =======================
+         Header section
+         Static header for all pages
+    ======================== -->
     <header>
         <h1>Bravo Planner</h1>
     </header>
 
-    <!-- Same nav as other pages -->
+    <!-- =======================
+         Navigation bar
+         Links to main pages
+         The "currentPage" class highlights the page currently open
+         Backend does not need to touch this
+    ======================== -->
     <nav>
         <ul>
             <li><a href="signUp.html">Sign Up</a></li>
@@ -28,24 +37,24 @@
 
     <main id="wrapper">
 
-        <h2>Your Schedule</h2>
-        <p>This page shows an example weekly view of your schedule. Later, the backend will fill this with your real
-            classes and events.</p>
+        <h2>Your Weekly Schedule</h2>
 
-        <!-- Range info -->
-        <section class="dash-card" style="max-width: 900px; margin: 0 auto 2rem auto;">
-            <h3>Current View</h3>
-            <p>
-                You selected a range from the dashboard (Today / This Week / This Month).
-                For now this is a static example for design purposes.
-            </p>
+        <!-- =======================
+             Week header
+             Backend can dynamically update this to show the current week
+        ======================== -->
+        <section class="dash-card weeklyCalendarDate">
+            <h3 id="week-title">Week of</h3>
         </section>
 
-        <!-- Weekly calendar table -->
-        <section class="dash-card" style="max-width: 1000px; margin: 0 auto;">
-            <h3>Weekly Calendar</h3>
-
-            <table class="calendar-table">
+        <!-- =======================
+             Pre-built weekly calendar table
+             This table shows 9 time slots down the left and Monday – Friday across the top
+             Each cell is empty and backend can fill with user events
+             Cell IDs follow format: hour-<hour>-<day> (e.g., hour-10-wed)
+        ======================== -->
+        <section class="dash-card weekly-calendar-section">
+            <table class="calendar-table weekly">
                 <thead>
                     <tr>
                         <th>Time</th>
@@ -57,47 +66,138 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- 9 time slots matching Daily View (8:00 – 5:00) -->
                     <tr>
-                        <td>8:00 – 10:00</td>
-                        <td>Math 101<br>Room B203</td>
-                        <td></td>
-                        <td>CS 110<br>Lab 2</td>
-                        <td></td>
-                        <td>Work Shift<br>Library</td>
+                        <td>8:00 – 9:00</td>
+                        <td id="hour-8-mon"></td>
+                        <td id="hour-8-tue"></td>
+                        <td id="hour-8-wed"></td>
+                        <td id="hour-8-thu"></td>
+                        <td id="hour-8-fri"></td>
                     </tr>
                     <tr>
-                        <td>10:00 – 12:00</td>
-                        <td></td>
-                        <td>English 201<br>Room C105</td>
-                        <td></td>
-                        <td>Study Time</td>
-                        <td></td>
+                        <td>9:00 – 10:00</td>
+                        <td id="hour-9-mon"></td>
+                        <td id="hour-9-tue"></td>
+                        <td id="hour-9-wed"></td>
+                        <td id="hour-9-thu"></td>
+                        <td id="hour-9-fri"></td>
                     </tr>
                     <tr>
-                        <td>1:00 – 3:00</td>
-                        <td>Personal</td>
-                        <td></td>
-                        <td></td>
-                        <td>CS 110 Lab</td>
-                        <td></td>
+                        <td>10:00 – 11:00</td>
+                        <td id="hour-10-mon"></td>
+                        <td id="hour-10-tue"></td>
+                        <td id="hour-10-wed"></td>
+                        <td id="hour-10-thu"></td>
+                        <td id="hour-10-fri"></td>
                     </tr>
-                    <!-- You can add more rows if you want -->
+                    <tr>
+                        <td>11:00 – 12:00</td>
+                        <td id="hour-11-mon"></td>
+                        <td id="hour-11-tue"></td>
+                        <td id="hour-11-wed"></td>
+                        <td id="hour-11-thu"></td>
+                        <td id="hour-11-fri"></td>
+                    </tr>
+                    <tr>
+                        <td>12:00 – 1:00</td>
+                        <td id="hour-12-mon"></td>
+                        <td id="hour-12-tue"></td>
+                        <td id="hour-12-wed"></td>
+                        <td id="hour-12-thu"></td>
+                        <td id="hour-12-fri"></td>
+                    </tr>
+                    <tr>
+                        <td>1:00 – 2:00</td>
+                        <td id="hour-13-mon"></td>
+                        <td id="hour-13-tue"></td>
+                        <td id="hour-13-wed"></td>
+                        <td id="hour-13-thu"></td>
+                        <td id="hour-13-fri"></td>
+                    </tr>
+                    <tr>
+                        <td>2:00 – 3:00</td>
+                        <td id="hour-14-mon"></td>
+                        <td id="hour-14-tue"></td>
+                        <td id="hour-14-wed"></td>
+                        <td id="hour-14-thu"></td>
+                        <td id="hour-14-fri"></td>
+                    </tr>
+                    <tr>
+                        <td>3:00 – 4:00</td>
+                        <td id="hour-15-mon"></td>
+                        <td id="hour-15-tue"></td>
+                        <td id="hour-15-wed"></td>
+                        <td id="hour-15-thu"></td>
+                        <td id="hour-15-fri"></td>
+                    </tr>
+                    <tr>
+                        <td>4:00 – 5:00</td>
+                        <td id="hour-16-mon"></td>
+                        <td id="hour-16-tue"></td>
+                        <td id="hour-16-wed"></td>
+                        <td id="hour-16-thu"></td>
+                        <td id="hour-16-fri"></td>
+                    </tr>
                 </tbody>
             </table>
 
-            <p style="margin-top:1rem;">
-                <a href="createSchedule.html">+ Add a new schedule item</a> |
+            <!-- =======================
+                 Navigation buttons
+                 JS updates week title dynamically; backend does not need to change this
+            ======================== -->
+            <div class="calendar-navWeekly">
+                <button onclick="previousWeek()">Previous Week</button>
+                <button onclick="nextWeek()">Next Week</button>
+            </div>
+
+            <p class="weekly-table-footer">
                 <a href="dashboard.html">Back to Dashboard</a>
             </p>
         </section>
 
     </main>
 
+    <!-- =======================
+         Footer section
+         Static footer for all pages
+    ======================== -->
     <footer>
         <p>Copyright &copy; 2025 Bravo Team
             <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
         </p>
     </footer>
+
+    <!-- =======================
+         Week navigation script
+         Optional JS updates week title dynamically
+         Backend can populate table using cell IDs above
+    ======================== -->
+    <script>
+        let currentWeekOffset = 0;
+
+        function updateWeekTitle() {
+            const today = new Date();
+            const monday = new Date(today);
+            monday.setDate(today.getDate() - today.getDay() + 1 + currentWeekOffset * 7);
+            const friday = new Date(monday);
+            friday.setDate(monday.getDate() + 4);
+            document.getElementById("week-title").textContent =
+                `Week of ${monday.toLocaleDateString()} – ${friday.toLocaleDateString()}`;
+        }
+
+        function previousWeek() {
+            currentWeekOffset--;
+            updateWeekTitle();
+        }
+
+        function nextWeek() {
+            currentWeekOffset++;
+            updateWeekTitle();
+        }
+
+        updateWeekTitle();
+    </script>
 
 </body>
 

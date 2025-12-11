@@ -277,7 +277,20 @@ in the middle of the webpage*/
             max-width: 600px;
             margin: 0 auto;
         }
-
+        /* Styles the weekly calendar page */
+        .weekly-calendar-section { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        /* Styles the navigation buttons on the weekly calendar page */
+        .calendar-navWeekly { 
+        margin-top: 1rem; 
+            text-align: center; 
+        }
+        /* Styles the footer on the weekly calendar page */
+        .weekly-table-footer { 
+            margin-top: 1rem; 
+        }
 
 /*
 //////////////////////////////////////////////////////////////////////////////////////// 
