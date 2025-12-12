@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Schedule</title>
+    <meta name="description" content="Create a new schedule item in Bravo Planner">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* You can move these into styles.css later if you want */
+        main {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: 100%;
+            padding: 0.6rem;
+            margin-top: 0.3rem;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        input[type="submit"] {
+            margin-top: 1.5rem;
+            padding: 0.6rem 1.4rem;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-top: 1rem;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Site header-->
+    <header>
+        <h1>Bravo Planner</h1>
+    </header>
+
+    <!-- For site navigation-->
+    <nav>
+        <ul>
+            <li><a href="signUp.html">Sign Up</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="calendarDailyView.html">Calendar Daily View</a></li>
+            <li><a href="calendarWeeklyView.html">Calendar Weekly View</a></li>
+            <li><a href="calendarMonthlyView.html">Calendar Monthly View</a></li>
+        </ul>
+    </nav>
+
+    <main id="wrapper">
+
+        <h2 id="pageTitle">Create Schedule</h2>
+
+        <p>
+            Use this form to create a new schedule item. It will be saved with the selected
+            schedule type (classes or work) and the date/time you choose.
+        </p>
+
+        <!-- Create Schedule Form -->
+        <!-- In a real backend app, action/method would point to a Django/Flask endpoint -->
+        <form id="scheduleForm">
+
+            <!-- Hidden field to store the schedule type (classes/work) from the URL -->
+            <input type="hidden" id="scheduleType" name="scheduleType">
+
+            <label for="date">*Date:</label>
+            <input id="date" name="date" type="date" required>
+
+            <label for="time">*Time:</label>
+            <input id="time" name="time" type="time" required>
+
+            <label for="title">*Title:</label>
+            <input id="title" name="title" type="text"
+                placeholder="Example: CS 110 Lab or Work Shift" required>
+
+            <label for="notes">Notes (optional):</label>
+            <textarea id="notes" name="notes"
+                placeholder="Example: Bring laptop and textbook."></textarea>
+
+            <input type="submit" value="Save Schedule">
+        </form>
+
+        <p class="message" id="message" style="display:none;">
+            Schedule saved! You can view it under your Daily / Weekly / Monthly calendar views.
+        </p>
+
+        <p style="margin-top: 1rem;">
+            <a href="dashboard.html">Back to Dashboard</a>
+        </p>
+
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2025 Bravo Team
+            <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
+        </p>
+    </footer>
+
+    <!-- Page JavaScript -->
+    <script>
+        // 1) Read ?createType=classes or ?createType=work from the URL
+        const params = new URLSearchParams(window.location.search);
+        const typeFromUrl = params.get('createType') || 'classes'; // default to classes
+
+        const scheduleTypeInput = document.getElementById('scheduleType');
+        const pageTitle = document.getElementById('pageTitle');
+
+        scheduleTypeInput.value = typeFromUrl; // store in hidden input
+
+        // Change the heading based on selected type
+        if (typeFromUrl === 'work') {
+            pageTitle.textContent = 'Create Work Schedule';
+        } else {
+            pageTitle.textContent = 'Create Class Schedule';
+        }
+
+        // 2) Handle form submission
+        const form = document.getElementById('scheduleForm');
+        const message = document.getElementById('message');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // prevent actual form submit/refresh
+
+            const schedule = {
+                type: scheduleTypeInput.value,                         // "classes" or "work"
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                title: document.getElementById('title').value,
+                notes: document.getElementById('notes').value
+            };
+
+            // For now, store schedule items in localStorage on the browser.
+            // Later, the backend can replace this with a database.
+            const existing = JSON.parse(localStorage.getItem('bravoEvents') || '[]');
+            existing.push(schedule);
+            localStorage.setItem('bravoEvents', JSON.stringify(existing));
+
+            // Show success message
+            message.style.display = 'block';
+
+            // Optionally clear the form
+            form.reset();
+        });
+    </script>
+
+</body>
+
+</html>

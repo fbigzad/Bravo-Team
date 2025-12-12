@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <meta name="description" content="Dashboard page for Bravo Planner">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -14,6 +15,7 @@
         <h1>Bravo Planner</h1>
     </header>
 
+    <!-- For site navigation-->
     <nav>
         <ul>
             <li><a href="signUp.html">Sign Up</a></li>
@@ -35,6 +37,7 @@
             <!-- 1. View schedule -->
             <div class="dash-card">
                 <h3>View Your Schedule</h3>
+
                 <!--Redirects to the selected calendar view page-->
                 <form id="viewScheduleForm" onsubmit="redirectSchedule(event)">
                     <label for="viewOption">Choose a range:</label>
@@ -46,47 +49,42 @@
 
                     <input type="submit" value="View">
                 </form>
+
                 <!-- 
                     JavaScript for the "View Your Schedule" dropdown:
-                    When the user selects an option and clicks "View," 
-                    this script prevents the default form submission and redirects 
+                    When the user selects an option and clicks "View,"
+                    this script prevents the default form submission and redirects
                     the browser to the HTML page corresponding to the selected option.
-                    Each <option> value should match the target page filename.
                 -->
-                <script>
-                    function redirectSchedule(event) {
-                        event.preventDefault(); // prevent actual form submission
-                        const select = document.getElementById("viewOption");
-                        const page = select.value; // get the selected page
-                        window.location.href = page; // redirect to the selected page
-                    }
-                </script>
-
             </div>
 
             <!-- 2. Create schedule -->
             <div class="dash-card">
                 <h3>Create a Schedule</h3>
 
-                <!-- added action="createSchedule.html" -->
-                <form action="createSchedule.html" method="get">
+                <!--Send user to createSchedule.html with ?createType=classes or ?createType=work-->
+                <form id="createScheduleForm" onsubmit="goToCreate(event)">
                     <label for="createType">Schedule type:</label>
                     <select id="createType" name="createType">
                         <option value="classes">Classes</option>
                         <option value="work">Work</option>
-                        <option value="study">Study Time</option>
-                        <option value="personal">Personal</option>
                     </select>
 
                     <input type="submit" value="Create">
                 </form>
+
+                <!--
+                    JavaScript for "Create a Schedule":
+                    Reads the selected schedule type and redirects to createSchedule.html,
+                    passing the type as a query string (e.g., ?createType=classes).
+                -->
             </div>
 
             <!-- 3. Notes -->
             <div class="dash-card">
                 <h3>Quick Notes</h3>
 
-                <!-- Notes can remain empty for now / backend team -->
+                <!--Notes can remain front-end only for now / backend team can store later-->
                 <form>
                     <label for="note">Write a note:</label>
                     <textarea id="note" rows="3" placeholder="Example: Study for exam on Friday."></textarea>
@@ -104,6 +102,25 @@
             <br><a href="mailto:paulschuh@ivytech.edu">Email Us</a>
         </p>
     </footer>
+
+    <!-- All dashboard JavaScript -->
+    <script>
+        // Handle "View Your Schedule"
+        function redirectSchedule(event) {
+            event.preventDefault(); // prevent actual form submission
+            const select = document.getElementById("viewOption");
+            const page = select.value; // get the selected page
+            window.location.href = page; // redirect to the selected page
+        }
+
+        // Handle "Create a Schedule"
+        function goToCreate(event) {
+            event.preventDefault(); // prevent actual form submission
+            const type = document.getElementById("createType").value; // "classes" or "work"
+            // Redirect to createSchedule.html, including the type in the URL
+            window.location.href = "createSchedule.html?createType=" + encodeURIComponent(type);
+        }
+    </script>
 
 </body>
 
