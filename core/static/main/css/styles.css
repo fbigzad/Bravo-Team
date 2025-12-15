@@ -776,3 +776,25 @@ input[type="submit"]:hover{
   font-size: 0.95rem;
   opacity: 0.85;
 }
+/* Make event links feel clickable */
+.event {
+  cursor: pointer;
+}
+
+.event:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+  transform: translateY(-1px);
+  transition: 0.15s ease;
+}
+/* Makes event clickable but keeps the same event styling */
+.event-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.event-link:hover .event {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+  transform: translateY(-1px);
+  transition: 0.15s ease;
+}

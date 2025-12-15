@@ -47,6 +47,16 @@
 
   <!-- Page content -->
   <main id="wrapper">
+    {% if messages %}
+  <div style="max-width:1100px;margin:1rem auto;">
+    {% for message in messages %}
+      <div class="dash-card" style="margin-bottom:.5rem;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
     {% block content %}{% endblock %}
   </main>
 

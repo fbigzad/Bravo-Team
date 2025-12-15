@@ -1,33 +1,35 @@
 {% extends "main/base.html" %}
-{% load static %}
 
-{% block title %}Bravo Planner - Daily Calendar{% endblock %}
+{% block title %}Daily Calendar{% endblock %}
 
 {% block content %}
-
   <h2>Your Daily Schedule</h2>
 
-  <!-- =======================
-       Today's Date Section
-       "dash-card" gives dashboard card styling
-       "dailyCalendarDate" is specific for daily calendar date display
-       Backend can dynamically update #current-date with today's date
-  ======================= -->
-  <section class="dash-card dailyCalendarDate">
-    <h3>Today's Date</h3>
+  <!-- =========================
+       Top Navigation (Daily + jump to Week/Month)
+       ========================= -->
+  <div class="calendar-nav">
+    <!-- Prev/Next Day -->
+    <a class="btn btn-soft" href="?date={{ prev_date|date:'Y-m-d' }}">← Previous Day</a>
+    <a class="btn btn-soft" href="?date={{ next_date|date:'Y-m-d' }}">Next Day →</a>
 
-    <!-- Backend will use current date id to populate this -->
-    <p id="current-date">
-      {{ today|date:"l, F j, Y" }}
-    </p>
+    <!-- Jump to weekly/monthly for the same time period -->
+    <a class="btn btn-outline" href="{% url 'calendar_weekly' %}?start={{ week_start|date:'Y-m-d' }}">Weekly View</a>
+    <a class="btn btn-outline" href="{% url 'calendar_monthly' %}?year={{ chosen_date|date:'Y' }}&month={{ chosen_date|date:'n' }}">Monthly View</a>
+  </div>
+
+  <!-- Date Picker -->
+  <form method="get" class="inline-form">
+    <label for="date">Choose a date:</label>
+    <input type="date" id="date" name="date" value="{{ chosen_date|date:'Y-m-d' }}">
+    <button class="btn btn-soft" type="submit">Go</button>
+  </form>
+
+  <section class="dash-card dailyCalendarDate">
+    <h3>Date</h3>
+    <p id="current-date">{{ chosen_date|date:"l, F j, Y" }}</p>
   </section>
 
-  <!-- =======================
-       Daily Schedule Table
-       "dash-card" gives dashboard card styling
-       "dailyCalendar" is specific for daily calendar table styling
-       Backend will populate the table cells with events for each hour
-  ======================= -->
   <section class="dash-card dailyCalendar">
     <h3>Time Slots</h3>
 
@@ -41,120 +43,43 @@
         </thead>
 
         <tbody>
-          <!-- Each row represents one hourly time slot -->
-          <!-- Backend will inject events into the corresponding <td> by ID -->
+          {% for row in rows %}
+            <tr>
+              <td class="time-col">
+                {{ row.hour }}:00 – {{ row.hour|add:"1" }}:00
+              </td>
 
-          <tr>
-            <td>8:00 – 9:00</td>
-            <td id="hour-8">
-              {% for item in items %}
-                {% if item.time.hour == 8 %}
-                  <div class="event">{{ item.title }}</div>
+              <td id="hour-{{ row.hour }}">
+                {% if row.items %}
+                  {% for item in row.items %}
+
+                    {# CLICKABLE EVENT: opens detail page, and returns back here #}
+                    <a class="event-link"
+                       href="{% url 'schedule_detail' item.pk %}?next={{ request.get_full_path|urlencode }}">
+                      <div class="event">
+                        <strong>{{ item.title }}</strong>
+                        <span class="pill">{{ item.get_item_type_display }}</span>
+                        <div class="muted">{{ item.time|time:"H:i" }} ({{ item.duration_minutes }} min)</div>
+                        {% if item.notes %}
+                          <div class="muted">{{ item.notes }}</div>
+                        {% endif %}
+                      </div>
+                    </a>
+
+                  {% endfor %}
+                {% else %}
+                  <span class="muted">—</span>
                 {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>9:00 – 10:00</td>
-            <td id="hour-9">
-              {% for item in items %}
-                {% if item.time.hour == 9 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>10:00 – 11:00</td>
-            <td id="hour-10">
-              {% for item in items %}
-                {% if item.time.hour == 10 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>11:00 – 12:00</td>
-            <td id="hour-11">
-              {% for item in items %}
-                {% if item.time.hour == 11 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>12:00 – 1:00</td>
-            <td id="hour-12">
-              {% for item in items %}
-                {% if item.time.hour == 12 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>1:00 – 2:00</td>
-            <td id="hour-13">
-              {% for item in items %}
-                {% if item.time.hour == 13 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>2:00 – 3:00</td>
-            <td id="hour-14">
-              {% for item in items %}
-                {% if item.time.hour == 14 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>3:00 – 4:00</td>
-            <td id="hour-15">
-              {% for item in items %}
-                {% if item.time.hour == 15 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
-          <tr>
-            <td>4:00 – 5:00</td>
-            <td id="hour-16">
-              {% for item in items %}
-                {% if item.time.hour == 16 %}
-                  <div class="event">{{ item.title }}</div>
-                {% endif %}
-              {% endfor %}
-            </td>
-          </tr>
-
+              </td>
+            </tr>
+          {% endfor %}
         </tbody>
+
       </table>
     </div>
 
-    <!-- =======================
-         Footer link for navigation
-         Static link back to Dashboard
-    ======================= -->
     <p class="table-footer">
       <a href="{% url 'dashboard' %}">Back to Dashboard</a>
     </p>
-
   </section>
-
 {% endblock %}

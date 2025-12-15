@@ -1,0 +1,61 @@
+{% extends "main/base.html" %}
+
+{% block title %}Schedule Details{% endblock %}
+
+{% block content %}
+  <h2>Schedule Details</h2>
+
+  <div class="calendar-nav">
+    {# Back button: return to where user came from #}
+    {% if next_url %}
+      <a class="btn btn-soft" href="{{ next_url }}">← Back</a>
+    {% else %}
+      <a class="btn btn-soft" href="{% url 'dashboard' %}">← Back to Dashboard</a>
+    {% endif %}
+  </div>
+
+  <section class="dash-card" style="max-width: 720px; margin: 1rem auto;">
+    <h3 style="margin-top: 0;">{{ item.title }}</h3>
+
+    <p class="muted" style="text-align:left; margin-top:.25rem;">
+      <strong>Type:</strong> {{ item.get_item_type_display }}
+    </p>
+
+    <p style="text-align:left;">
+      <strong>Date:</strong> {{ item.date|date:"l, F j, Y" }}<br>
+      <strong>Start:</strong> {{ item.time|time:"H:i" }}<br>
+      <strong>Duration:</strong> {{ item.duration_minutes }} minutes
+    </p>
+
+    {% if item.notes %}
+      <hr>
+      <p style="text-align:left; margin:0;">
+        <strong>Notes</strong><br>
+        {{ item.notes|linebreaksbr }}
+      </p>
+    {% endif %}
+
+    {% if item.created_at %}
+      <p class="muted" style="text-align:left; margin-top:1rem;">
+        Created: {{ item.created_at|date:"M d, Y H:i" }}
+      </p>
+    {% endif %}
+
+    <hr>
+
+<form method="post"
+      action="{% url 'schedule_delete' item.pk %}"
+      onsubmit="return confirm('Remove this schedule item? This cannot be undone.');"
+      style="text-align:left; margin-top: 1rem;">
+  {% csrf_token %}
+
+  {# send the next_url back so delete returns user to calendar page #}
+  <input type="hidden" name="next" value="{{ next_url }}">
+
+  <button type="submit" class="btn btn-outline" style="border-color: rgba(176,0,32,.35); color:#b00020;">
+    Remove Task
+  </button>
+</form>
+
+  </section>
+{% endblock %}
