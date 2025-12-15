@@ -1,0 +1,158 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Bravo Planner - Weekly Calendar{% endblock %}
+
+{% block content %}
+
+    <h2>Your Weekly Schedule</h2>
+
+    <!-- =======================
+         Week header
+         Backend can dynamically update this to show the current week
+    ======================== -->
+    <section class="dash-card weeklyCalendarDate">
+        <h3 id="week-title">Week of</h3>
+    </section>
+
+    <!-- =======================
+         Pre-built weekly calendar table
+         This table shows 9 time slots down the left and Monday – Friday across the top
+         Each cell is empty and backend can fill with user events
+         Cell IDs follow format: hour-<hour>-<day> (e.g., hour-10-wed)
+    ======================== -->
+    <section class="dash-card weekly-calendar-section">
+        <table class="calendar-table weekly">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 9 time slots matching Daily View (8:00 – 5:00) -->
+                <tr>
+                    <td>8:00 – 9:00</td>
+                    <td id="hour-8-mon"></td>
+                    <td id="hour-8-tue"></td>
+                    <td id="hour-8-wed"></td>
+                    <td id="hour-8-thu"></td>
+                    <td id="hour-8-fri"></td>
+                </tr>
+                <tr>
+                    <td>9:00 – 10:00</td>
+                    <td id="hour-9-mon"></td>
+                    <td id="hour-9-tue"></td>
+                    <td id="hour-9-wed"></td>
+                    <td id="hour-9-thu"></td>
+                    <td id="hour-9-fri"></td>
+                </tr>
+                <tr>
+                    <td>10:00 – 11:00</td>
+                    <td id="hour-10-mon"></td>
+                    <td id="hour-10-tue"></td>
+                    <td id="hour-10-wed"></td>
+                    <td id="hour-10-thu"></td>
+                    <td id="hour-10-fri"></td>
+                </tr>
+                <tr>
+                    <td>11:00 – 12:00</td>
+                    <td id="hour-11-mon"></td>
+                    <td id="hour-11-tue"></td>
+                    <td id="hour-11-wed"></td>
+                    <td id="hour-11-thu"></td>
+                    <td id="hour-11-fri"></td>
+                </tr>
+                <tr>
+                    <td>12:00 – 1:00</td>
+                    <td id="hour-12-mon"></td>
+                    <td id="hour-12-tue"></td>
+                    <td id="hour-12-wed"></td>
+                    <td id="hour-12-thu"></td>
+                    <td id="hour-12-fri"></td>
+                </tr>
+                <tr>
+                    <td>1:00 – 2:00</td>
+                    <td id="hour-13-mon"></td>
+                    <td id="hour-13-tue"></td>
+                    <td id="hour-13-wed"></td>
+                    <td id="hour-13-thu"></td>
+                    <td id="hour-13-fri"></td>
+                </tr>
+                <tr>
+                    <td>2:00 – 3:00</td>
+                    <td id="hour-14-mon"></td>
+                    <td id="hour-14-tue"></td>
+                    <td id="hour-14-wed"></td>
+                    <td id="hour-14-thu"></td>
+                    <td id="hour-14-fri"></td>
+                </tr>
+                <tr>
+                    <td>3:00 – 4:00</td>
+                    <td id="hour-15-mon"></td>
+                    <td id="hour-15-tue"></td>
+                    <td id="hour-15-wed"></td>
+                    <td id="hour-15-thu"></td>
+                    <td id="hour-15-fri"></td>
+                </tr>
+                <tr>
+                    <td>4:00 – 5:00</td>
+                    <td id="hour-16-mon"></td>
+                    <td id="hour-16-tue"></td>
+                    <td id="hour-16-wed"></td>
+                    <td id="hour-16-thu"></td>
+                    <td id="hour-16-fri"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- =======================
+             Navigation buttons
+             JS updates week title dynamically; backend does not need to change this
+        ======================== -->
+        <div class="calendar-navWeekly">
+            <button onclick="previousWeek()">Previous Week</button>
+            <button onclick="nextWeek()">Next Week</button>
+        </div>
+
+        <p class="weekly-table-footer">
+            <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+        </p>
+    </section>
+
+    <!-- =======================
+         Week navigation script
+         Optional JS updates week title dynamically
+         Backend can populate table using cell IDs above
+    ======================== -->
+    <script>
+        let currentWeekOffset = 0;
+
+        function updateWeekTitle() {
+            const today = new Date();
+            const monday = new Date(today);
+            monday.setDate(today.getDate() - today.getDay() + 1 + currentWeekOffset * 7);
+            const friday = new Date(monday);
+            friday.setDate(monday.getDate() + 4);
+            document.getElementById("week-title").textContent =
+                `Week of ${monday.toLocaleDateString()} – ${friday.toLocaleDateString()}`;
+        }
+
+        function previousWeek() {
+            currentWeekOffset--;
+            updateWeekTitle();
+        }
+
+        function nextWeek() {
+            currentWeekOffset++;
+            updateWeekTitle();
+        }
+
+        updateWeekTitle();
+    </script>
+
+{% endblock %}

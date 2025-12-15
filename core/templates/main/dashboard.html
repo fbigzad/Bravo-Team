@@ -1,0 +1,83 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  <h2>Your Dashboard</h2>
+  <p>Select an action below to start working with your schedule.</p>
+
+  <section class="dash-grid">
+
+    <!-- 1. View schedule -->
+    <div class="dash-card">
+      <h3>View Your Schedule</h3>
+
+      <!-- Redirects to the selected calendar view page -->
+      <form id="viewScheduleForm" onsubmit="redirectSchedule(event)">
+        <label for="viewOption">Choose a range:</label>
+        <select id="viewOption" name="viewOption">
+          <option value="{% url 'calendar_daily' %}">Today</option>
+          <option value="{% url 'calendar_weekly' %}">This Week</option>
+          <option value="{% url 'calendar_monthly' %}">This Month</option>
+        </select>
+
+        <input type="submit" value="View">
+      </form>
+    </div>
+
+    <!-- 2. Create schedule -->
+    <div class="dash-card">
+      <h3>Create a Schedule</h3>
+
+      <!-- Sends user to schedule_create with ?createType=classes or ?createType=work -->
+      <form id="createScheduleForm" onsubmit="goToCreate(event)">
+        <label for="createType">Schedule type:</label>
+        <select id="createType" name="createType">
+          <option value="classes">Classes</option>
+          <option value="work">Work</option>
+        </select>
+
+        <input type="submit" value="Create">
+      </form>
+
+      <!--
+        JavaScript for "Create a Schedule":
+        Reads the selected schedule type and redirects to schedule_create,
+        passing the type as a query string (e.g., ?createType=classes).
+      -->
+    </div>
+
+    <!-- 3. Notes -->
+    <div class="dash-card">
+      <h3>Quick Notes</h3>
+
+      <!-- Notes can remain front-end only for now / backend team can store later -->
+      <form>
+        <label for="note">Write a note:</label>
+        <textarea id="note" rows="3" placeholder="Example: Study for exam on Friday."></textarea>
+        <input type="submit" value="Save">
+      </form>
+    </div>
+
+  </section>
+
+  <!-- All dashboard JavaScript -->
+  <script>
+    // Handle "View Your Schedule"
+    function redirectSchedule(event) {
+      event.preventDefault(); // prevent actual form submission
+      const select = document.getElementById("viewOption");
+      const page = select.value; // get the selected page
+      window.location.href = page; // redirect to the selected page
+    }
+
+    // Handle "Create a Schedule"
+    function goToCreate(event) {
+      event.preventDefault(); // prevent actual form submission
+      const type = document.getElementById("createType").value; // "classes" or "work"
+      // Redirect to schedule_create, including the type in the URL
+      window.location.href = "{% url 'schedule_create' %}" + "?createType=" + encodeURIComponent(type);
+    }
+  </script>
+{% endblock %}

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <meta name="description" content="Login page for Bravo Planner">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
 </head>
 
 <body>
@@ -18,15 +19,14 @@
     <nav>
         <ul>
             <!-- For site navigation-->
-            <li><a href="signUp.html">Sign Up</a></li>
-            <li><a href="index.html" class="currentPage">Login</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-            <li><a href="calendarDailyView.html">Calendar Daily View</a></li>
-            <li><a href="calendarWeeklyView.html">Calendar Weekly View</a></li>
-            <li><a href="calendarMonthlyView.html">Calendar Monthly View</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'login' %}" class="currentPage">Login</a></li>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'calendar_daily' %}">Calendar Daily View</a></li>
+            <li><a href="{% url 'calendar_weekly' %}">Calendar Weekly View</a></li>
+            <li><a href="{% url 'calendar_monthly' %}">Calendar Monthly View</a></li>
         </ul>
     </nav>
-
 
     <main id="wrapper">
 
@@ -47,13 +47,14 @@
             TODO: replace /login with the actual backend endpoint 
             ////////////////////////////////////////////////////////////////
             -->
-            <form id="loginForm" action="/login" method="post">
+            <form id="loginForm" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
 
                 <label for="myUserID">*User ID:</label>
-                <input type="text" name="User_ID" id="myUserID" required>
+                <input type="text" name="username" id="myUserID" required>
 
                 <label for="myPassword">*Password:</label>
-                <input type="password" name="Password" id="myPassword" required>
+                <input type="password" name="password" id="myPassword" required>
 
                 <div class="button-group">
                     <input type="submit" value="Login">
@@ -65,7 +66,7 @@
             <!-- Redirect user to sign up page with create account button -->
             <script>
                 document.getElementById("openSignup").addEventListener("click", function () {
-                    window.location.href = "signup.html";
+                    window.location.href = "{% url 'signup' %}";
                 });
             </script>
 

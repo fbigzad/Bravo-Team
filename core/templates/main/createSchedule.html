@@ -1,0 +1,271 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Create Schedule{% endblock %}
+
+{% block content %}
+
+<!--
+  ===========================================================
+  Create Schedule Page (Professional UI)
+  - Uses shared layout from main/base.html (navbar stays consistent)
+  - Renders each field manually so we can style and layout nicely
+  - Adds quick buttons: Today / Now
+  - Adds a live preview panel (start + end time)
+  ===========================================================
+-->
+
+<div class="page-shell">
+
+  <!-- Page header -->
+  <div class="page-head">
+    <div>
+      <h2 id="pageTitle" class="page-title">Create Schedule</h2>
+      <p class="page-subtitle">
+        Add classes or work events with date, time, and duration.
+      </p>
+    </div>
+
+    <!-- Quick navigation -->
+    <div class="page-head-actions">
+      <a class="btn btn-ghost" href="{% url 'dashboard' %}">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <div class="two-col">
+
+    <!-- =========================
+         MAIN FORM CARD
+    ========================== -->
+    <section class="card">
+      <div class="card-head">
+        <h3 class="card-title">Event Details</h3>
+        <p class="card-subtitle">Fill the fields below and save your schedule item.</p>
+      </div>
+
+      <!-- Show form errors (important for user feedback) -->
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <strong>Fix the errors below:</strong>
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <!-- =========================
+           Create Schedule Form
+           - POST is required to submit data
+           - csrf_token is required for Django security
+      ========================== -->
+      <form method="post" class="form">
+        {% csrf_token %}
+
+        <!-- Row 1: Type -->
+        <div class="field">
+          <label class="label" for="{{ form.item_type.id_for_label }}">Schedule type</label>
+          {{ form.item_type }}
+          <div class="hint">Choose whether this is a class or work event.</div>
+          {% if form.item_type.errors %}<div class="error">{{ form.item_type.errors }}</div>{% endif %}
+        </div>
+
+        <!-- Row 2: Title -->
+        <div class="field">
+          <label class="label" for="{{ form.title.id_for_label }}">Title</label>
+          {{ form.title }}
+          <div class="hint">Example: “CSCI 105 Lecture” or “Work Shift”.</div>
+          {% if form.title.errors %}<div class="error">{{ form.title.errors }}</div>{% endif %}
+        </div>
+
+        <!-- Row 3: Date / Time / Duration (grid) -->
+        <div class="grid-3">
+
+          <div class="field">
+            <label class="label" for="{{ form.date.id_for_label }}">Date</label>
+            {{ form.date }}
+            <div class="hint">Pick the day for this event.</div>
+            {% if form.date.errors %}<div class="error">{{ form.date.errors }}</div>{% endif %}
+
+            <!-- Quick helper buttons -->
+            <div class="mini-actions">
+              <button type="button" class="btn btn-soft" id="btnToday">Today</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="{{ form.time.id_for_label }}">Start time</label>
+            {{ form.time }}
+            <div class="hint">Choose when it starts.</div>
+            {% if form.time.errors %}<div class="error">{{ form.time.errors }}</div>{% endif %}
+
+            <!-- Quick helper buttons -->
+            <div class="mini-actions">
+              <button type="button" class="btn btn-soft" id="btnNow">Now</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="{{ form.duration_minutes.id_for_label }}">Duration (minutes)</label>
+            {{ form.duration_minutes }}
+            <div class="hint">Typical: 30, 60, 90, 120…</div>
+            {% if form.duration_minutes.errors %}<div class="error">{{ form.duration_minutes.errors }}</div>{% endif %}
+          </div>
+
+        </div>
+
+        <!-- Notes -->
+        <div class="field">
+          <label class="label" for="{{ form.notes.id_for_label }}">Notes</label>
+          {{ form.notes }}
+          <div class="hint">Optional: room number, zoom link, tasks, etc.</div>
+          {% if form.notes.errors %}<div class="error">{{ form.notes.errors }}</div>{% endif %}
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Save Schedule</button>
+          <a class="btn btn-outline" href="{% url 'calendar_daily' %}">View Daily Calendar</a>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- =========================
+         PREVIEW PANEL (Eye-catching feature)
+    ========================== -->
+    <aside class="card preview-card">
+      <div class="card-head">
+        <h3 class="card-title">Schedule Preview</h3>
+        <p class="card-subtitle">This updates as you type (no database changes yet).</p>
+      </div>
+
+      <div class="preview-line">
+        <span class="preview-label">Type</span>
+        <span class="preview-value" id="pvType">—</span>
+      </div>
+
+      <div class="preview-line">
+        <span class="preview-label">Title</span>
+        <span class="preview-value" id="pvTitle">—</span>
+      </div>
+
+      <div class="preview-line">
+        <span class="preview-label">Date</span>
+        <span class="preview-value" id="pvDate">—</span>
+      </div>
+
+      <div class="preview-line">
+        <span class="preview-label">Start</span>
+        <span class="preview-value" id="pvStart">—</span>
+      </div>
+
+      <div class="preview-line">
+        <span class="preview-label">End</span>
+        <span class="preview-value" id="pvEnd">—</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="small-muted">
+        Tip: Use <strong>Today</strong> / <strong>Now</strong> buttons to fill faster.
+      </p>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ===========================================================
+     JavaScript
+     - Sets the heading based on ?createType=work or ?createType=classes
+     - Adds Today / Now quick buttons
+     - Creates a live preview (including end time from duration)
+   =========================================================== -->
+<script>
+  // ---------- Page Title based on createType ----------
+  const params = new URLSearchParams(window.location.search);
+  const typeFromUrl = params.get('createType') || 'classes';
+
+  const pageTitle = document.getElementById('pageTitle');
+  if (typeFromUrl === 'work') {
+    pageTitle.textContent = 'Create Work Schedule';
+  } else {
+    pageTitle.textContent = 'Create Class Schedule';
+  }
+
+  // ---------- Find inputs by Django-rendered IDs ----------
+  const elType = document.getElementById("id_item_type");
+  const elTitle = document.getElementById("id_title");
+  const elDate = document.getElementById("id_date");
+  const elTime = document.getElementById("id_time");
+  const elDuration = document.getElementById("id_duration_minutes");
+
+  // ---------- Preview elements ----------
+  const pvType = document.getElementById("pvType");
+  const pvTitle = document.getElementById("pvTitle");
+  const pvDate = document.getElementById("pvDate");
+  const pvStart = document.getElementById("pvStart");
+  const pvEnd = document.getElementById("pvEnd");
+
+  // ---------- Helpers ----------
+  function pad2(n) { return String(n).padStart(2, "0"); }
+
+  function formatDatePretty(iso) {
+    // iso: YYYY-MM-DD
+    if (!iso) return "—";
+    const [y, m, d] = iso.split("-").map(Number);
+    const dt = new Date(y, m - 1, d);
+    return dt.toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric" });
+  }
+
+  function computeEndTime(startHHMM, durationMinutes) {
+    if (!startHHMM || !durationMinutes) return "—";
+    const [hh, mm] = startHHMM.split(":").map(Number);
+    if (Number.isNaN(hh) || Number.isNaN(mm)) return "—";
+
+    const total = hh * 60 + mm + Number(durationMinutes);
+    const end = (total + 24 * 60) % (24 * 60); // safe wrap
+    const endH = Math.floor(end / 60);
+    const endM = end % 60;
+    return `${pad2(endH)}:${pad2(endM)}`;
+  }
+
+  function updatePreview() {
+    // Type
+    const typeText = elType?.options?.[elType.selectedIndex]?.text || "—";
+    pvType.textContent = typeText;
+
+    // Title
+    pvTitle.textContent = elTitle?.value?.trim() || "—";
+
+    // Date
+    pvDate.textContent = formatDatePretty(elDate?.value);
+
+    // Start time
+    pvStart.textContent = elTime?.value || "—";
+
+    // End time
+    pvEnd.textContent = computeEndTime(elTime?.value, elDuration?.value);
+  }
+
+  // ---------- Quick buttons ----------
+  document.getElementById("btnToday").addEventListener("click", () => {
+    const now = new Date();
+    elDate.value = `${now.getFullYear()}-${pad2(now.getMonth() + 1)}-${pad2(now.getDate())}`;
+    updatePreview();
+  });
+
+  document.getElementById("btnNow").addEventListener("click", () => {
+    const now = new Date();
+    elTime.value = `${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+    updatePreview();
+  });
+
+  // Update preview when user types/changes fields
+  [elType, elTitle, elDate, elTime, elDuration].forEach(el => {
+    if (el) el.addEventListener("input", updatePreview);
+    if (el) el.addEventListener("change", updatePreview);
+  });
+
+  // Initial preview on page load
+  updatePreview();
+</script>
+
+{% endblock %}
