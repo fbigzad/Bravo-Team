@@ -18,9 +18,9 @@
 
   <!-- Beginner note: show a nice error box if there are form errors -->
   {% if form.errors %}
-    <div class="auth-alert">
-      <strong>Please fix the errors below.</strong>
-    </div>
+  <div class="auth-alert">
+    <strong>Please fix the errors below.</strong>
+  </div>
   {% endif %}
 
   <!-- Signup form -->
@@ -59,7 +59,7 @@
 
     <!-- Non-field errors (rare, but helpful) -->
     {% for error in form.non_field_errors %}
-      <div class="error">{{ error }}</div>
+    <div class="error">{{ error }}</div>
     {% endfor %}
 
     <button type="submit" class="btn-primary">Create account</button>
@@ -86,36 +86,43 @@
     margin: 0 0 .25rem;
     font-size: 1.6rem;
   }
+
   .auth-subtitle {
     margin: 0 0 1.25rem;
     opacity: .8;
+    color: #ffffff;
   }
 
   /* Card look */
   .auth-card {
     background: #fff;
-    border: 1px solid rgba(0,0,0,.08);
+    border: 1px solid rgba(0, 0, 0, .08);
     border-radius: 12px;
     padding: 1.25rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
   }
 
   /* Inputs */
-  .field { margin-bottom: 1rem; }
+  .field {
+    margin-bottom: 1rem;
+  }
+
   .field label {
     display: block;
     font-weight: 600;
     margin-bottom: .35rem;
   }
+
   .field input {
     width: 100%;
     padding: .65rem .75rem;
     border-radius: 10px;
-    border: 1px solid rgba(0,0,0,.18);
+    border: 1px solid rgba(0, 0, 0, .18);
     outline: none;
   }
+
   .field input:focus {
-    border-color: rgba(0,0,0,.5);
+    border-color: rgba(0, 0, 0, .5);
   }
 
   /* Help + errors */
@@ -125,11 +132,13 @@
     font-size: .85rem;
     opacity: .75;
   }
+
   .error {
     margin-top: .35rem;
     color: #b00020;
     font-size: .9rem;
   }
+
   .auth-alert {
     background: rgba(176, 0, 32, .08);
     border: 1px solid rgba(176, 0, 32, .25);
