@@ -1,187 +1,228 @@
 {# ============================================= #}
-{#  Login Page Template (Django Auth LoginView)   #}
-{#  File: core/templates/registration/login.html  #}
+{# Login Page Template (Django Auth LoginView) #}
+{# File: core/templates/registration/login.html #}
 {# ============================================= #}
 
 {% extends "main/base.html" %} {# Use your site-wide base layout #}
 
 {% block title %}Login{% endblock %} {# Sets the <title> in base.html if base uses it #}
 
-{% block content %}
-{# Main container for the page content #}
-<section class="auth-wrap">
+  {% block content %}
+  {# Main container for the page content #}
+  <section class="auth-wrap">
 
-  {# Card-style login box #}
-  <div class="auth-card">
+    {# Card-style login box #}
+    <div class="auth-card">
 
-    {# Page heading + short helper text #}
-    <header class="auth-header">
-      <h1 class="auth-title">Welcome back</h1>
-      <p class="auth-subtitle">Log in to access your dashboard and schedules.</p>
-    </header>
+      {# Page heading + short helper text #}
+      <header class="auth-header">
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Log in to access your dashboard and schedules.</p>
+      </header>
 
-    {# Show form-wide errors (wrong username/password, etc.) #}
-    {% if form.non_field_errors %}
+      {# Show form-wide errors (wrong username/password, etc.) #}
+      {% if form.non_field_errors %}
       <div class="auth-alert" role="alert">
         {{ form.non_field_errors }}
       </div>
-    {% endif %}
-
-    {# Login form (posts to the same URL) #}
-    <form method="post" class="auth-form" novalidate>
-      {% csrf_token %} {# Security token required for POST forms in Django #}
-
-      {# Username field #}
-      <div class="auth-field">
-        <label class="auth-label" for="{{ form.username.id_for_label }}">Username</label>
-        {{ form.username }} {# Django renders the input element #}
-        {% if form.username.errors %}
-          <div class="auth-error">{{ form.username.errors }}</div>
-        {% endif %}
-      </div>
-
-      {# Password field #}
-      <div class="auth-field">
-        <label class="auth-label" for="{{ form.password.id_for_label }}">Password</label>
-        {{ form.password }}
-        {% if form.password.errors %}
-          <div class="auth-error">{{ form.password.errors }}</div>
-        {% endif %}
-      </div>
-
-      {# Keep the "next" parameter if Django sent user here from a protected page #}
-      {% if next %}
-        <input type="hidden" name="next" value="{{ next }}">
       {% endif %}
 
-      {# Primary submit button #}
-      <button type="submit" class="auth-btn">Log in</button>
-    </form>
+      {# Login form (posts to the same URL) #}
+      <form method="post" class="auth-form" novalidate>
+        {% csrf_token %} {# Security token required for POST forms in Django #}
 
-    {# Secondary actions #}
-    <div class="auth-footer">
-      <p class="auth-muted">
-        Don’t have an account?
-        <a class="auth-link" href="{% url 'signup' %}">Create one</a>
-      </p>
+        {# Username field #}
+        <div class="auth-field">
+          <label class="auth-label" for="{{ form.username.id_for_label }}">Username</label>
+          {{ form.username }} {# Django renders the input element #}
+          {% if form.username.errors %}
+          <div class="auth-error">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+
+        {# Password field #}
+        <div class="auth-field">
+          <label class="auth-label" for="{{ form.password.id_for_label }}">Password</label>
+          {{ form.password }}
+          {% if form.password.errors %}
+          <div class="auth-error">{{ form.password.errors }}</div>
+          {% endif %}
+        </div>
+
+        {# Keep the "next" parameter if Django sent user here from a protected page #}
+        {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+
+        {# Primary submit button #}
+        <button type="submit" class="auth-btn">Log in</button>
+      </form>
+
+      {# Secondary actions #}
+      <div class="auth-footer">
+        <p class="auth-muted">
+          Don’t have an account?
+          <a class="auth-link" href="{% url 'signup' %}">Create one</a>
+        </p>
+      </div>
+
     </div>
+  </section>
 
-  </div>
-</section>
-
-{# ===================================================== #}
-{#  Page-only CSS (keeps base.html clean; works instantly) #}
-{#  Later you can move this into styles.css if desired.    #}
-{# ===================================================== #}
-<style>
-  /* Page layout wrapper */
-  .auth-wrap{
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
-  }
-
-  /* Card container */
-  .auth-card{
-    width: 100%;
-    max-width: 460px;
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,.08);
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
-    padding: 1.75rem;
-  }
-
-  /* Header text */
-  .auth-header{ margin-bottom: 1rem; }
-  .auth-title{
-    margin: 0 0 .25rem;
-    font-size: 1.6rem;
-    letter-spacing: .2px;
-  }
-  .auth-subtitle{
-    margin: 0;
-    opacity: .75;
-    font-size: .98rem;
-  }
-
-  /* Alerts + errors */
-  .auth-alert{
-    background: rgba(220,53,69,.08);
-    border: 1px solid rgba(220,53,69,.2);
-    color: #b02a37;
-    border-radius: 10px;
-    padding: .75rem .9rem;
-    margin: .9rem 0;
-    font-size: .95rem;
-  }
-  .auth-error{
-    color: #b02a37;
-    font-size: .9rem;
-    margin-top: .25rem;
-  }
-
-  /* Form fields */
-  .auth-form{ margin-top: .75rem; }
-  .auth-field{ margin-bottom: 1rem; }
-  .auth-label{
-    display: block;
-    font-weight: 600;
-    margin-bottom: .35rem;
-  }
-
-  /* Style Django’s default inputs (works even without widget tweaks) */
-  .auth-form input[type="text"],
-  .auth-form input[type="password"],
-  .auth-form input[type="email"]{
-    width: 100%;
-    padding: .7rem .8rem;
-    border-radius: 10px;
-    border: 1px solid rgba(0,0,0,.18);
-    outline: none;
-    transition: box-shadow .15s ease, border-color .15s ease;
-  }
-  .auth-form input:focus{
-    border-color: rgba(13,110,253,.55);
-    box-shadow: 0 0 0 4px rgba(13,110,253,.12);
-  }
-
-  /* Login button */
-  .auth-btn{
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    padding: .75rem .9rem;
-    font-weight: 700;
-    cursor: pointer;
-    background: #0d6efd;
-    color: #fff;
-    transition: transform .05s ease, opacity .15s ease;
-  }
-  .auth-btn:active{ transform: translateY(1px); }
-  .auth-btn:hover{ opacity: .95; }
-
-  /* Footer links */
-  .auth-footer{ margin-top: 1.1rem; text-align: center; }
-  .auth-muted{ margin: 0; opacity: .8; }
-  .auth-link{ font-weight: 700; text-decoration: none; }
-  .auth-link:hover{ text-decoration: underline; }
-
-  /* Dark mode-friendly background if your base uses a light gray page */
-  @media (prefers-color-scheme: dark){
-    .auth-card{
-      background: rgba(20,20,20,0.9);
-      border-color: rgba(255,255,255,.12);
-      color: #f2f2f2;
+  {# ===================================================== #}
+  {# Page-only CSS (keeps base.html clean; works instantly) #}
+  {# Later you can move this into styles.css if desired. #}
+  {# ===================================================== #}
+  <style>
+    /* Page layout wrapper */
+    .auth-wrap {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
     }
-    .auth-form input{
-      background: rgba(255,255,255,.06);
-      color: #f2f2f2;
-      border-color: rgba(255,255,255,.18);
+
+    /* Card container */
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, .08);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+      padding: 1.75rem;
     }
-    .auth-subtitle, .auth-muted{ opacity: .85; }
-  }
-</style>
-{% endblock %}
+
+    /* Header text */
+    .auth-header {
+      margin-bottom: 1rem;
+    }
+
+    .auth-title {
+      margin: 0 0 .25rem;
+      font-size: 1.6rem;
+      letter-spacing: .2px;
+    }
+
+    .auth-subtitle {
+      margin: 0;
+      opacity: .75;
+      font-size: .98rem;
+    }
+
+    /* Alerts + errors */
+    .auth-alert {
+      background: rgba(220, 53, 69, .08);
+      border: 1px solid rgba(220, 53, 69, .2);
+      color: #b02a37;
+      border-radius: 10px;
+      padding: .75rem .9rem;
+      margin: .9rem 0;
+      font-size: .95rem;
+    }
+
+    .auth-error {
+      color: #b02a37;
+      font-size: .9rem;
+      margin-top: .25rem;
+    }
+
+    /* Form fields */
+    .auth-form {
+      margin-top: .75rem;
+    }
+
+    .auth-field {
+      margin-bottom: 1rem;
+    }
+
+    .auth-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: .35rem;
+    }
+
+    /* Style Django’s default inputs (works even without widget tweaks) */
+    .auth-form input[type="text"],
+    .auth-form input[type="password"],
+    .auth-form input[type="email"] {
+      width: 100%;
+      padding: .7rem .8rem;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, .18);
+      outline: none;
+      transition: box-shadow .15s ease, border-color .15s ease;
+      background-color: #ffffff;
+      color: #111111;
+    }
+
+    .auth-form input:focus {
+      border-color: rgba(13, 110, 253, .55);
+      box-shadow: 0 0 0 4px rgba(13, 110, 253, .12);
+    }
+
+    /* Login button */
+    .auth-btn {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: .75rem .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: #0d6efd;
+      color: #fff;
+      transition: transform .05s ease, opacity .15s ease;
+    }
+
+    .auth-btn:active {
+      transform: translateY(1px);
+    }
+
+    .auth-btn:hover {
+      opacity: .95;
+    }
+
+    /* Footer links */
+    .auth-footer {
+      margin-top: 1.1rem;
+      text-align: center;
+    }
+
+    .auth-muted {
+      margin: 0;
+      opacity: .8;
+    }
+
+    .auth-link {
+      font-weight: 700;
+      text-decoration: none;
+      color: #4da6ff;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Dark mode-friendly background if your base uses a light gray page */
+    @media (prefers-color-scheme: dark) {
+      .auth-card {
+        background: rgba(20, 20, 20, 0.9);
+        border-color: rgba(255, 255, 255, .12);
+        color: #f2f2f2;
+      }
+
+      .auth-form input {
+        background: rgba(255, 255, 255, .06);
+        color: #f2f2f2;
+        border-color: rgba(255, 255, 255, .18);
+      }
+
+      .auth-subtitle,
+      .auth-muted {
+        color: #ffffff;
+        opacity: .85;
+      }
+    }
+  </style>
+  {% endblock %}
