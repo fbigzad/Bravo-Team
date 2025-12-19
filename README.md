@@ -34,10 +34,11 @@ It includes **Daily / Weekly / Monthly** calendar views, a **schedule item detai
    ```bash
    python -m venv venv
    venv\Scripts\Activate
-4. Open settings.py file to change DEBUG value for local development
-	sheduler/settings.py
-5. Set DEBUG value to True for local development
-	DEBUG = True
+4. Open `settings.py` file to change `DEBUG` value for local development
+   - Path: `scheduler/settings.py`
+5. Set `DEBUG` value to `True` for local development
+   - `DEBUG = True`
+   - Click **Save**
 5. Install requirements.txt
    ```bash
    pip install -r requirements.txt
