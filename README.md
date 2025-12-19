@@ -30,23 +30,25 @@ It includes **Daily / Weekly / Monthly** calendar views, a **schedule item detai
 2. Enter the Project Folder:
    ```bash
    cd your-folder-name
-   
 3. create a virtual Environment
    ```bash
    python -m venv venv
    venv\Scripts\Activate
+4. Open settings to change DEBUG value for local development
+	```bash
+	nano sheduler/settings.py
+5. Set DEBUG value to True for local development
+	DEBUG = True
 5. Install requirements.txt
    ```bash
    pip install -r requirements.txt
-4. Run migrations (creates database tables)
+6. Run migrations (creates database tables)
    ```bash
    python manage.py migrate
-   
-5. Create admin user (optional)
+7. Create admin user (optional)
 	```bash
 	python manage.py createsuperuser
-
-6. Start the Django server
+8. Start the Django server
    ```bash
    python manage.py runserver
 
@@ -81,18 +83,19 @@ This project can be deployed on **PythonAnywhere** using **SQLite** for a simple
 		cd ~
 		git clone https://github.com/fbigzad/Bravo-Team.git
 		cd Bravo-Team
-2. Create a Python 3.10 virtualenv
+3. Create a Python 3.10 virtualenv
    ```bash
    python3.10 -m venv venv
-3. Activate the Virtual Environment
+4. Activate the Virtual Environment
    ```bash
    source venv/bin/activate
-4. Upgrade pip
+5. Upgrade pip
    ```bash
    python -m pip install --upgrade pip
-5. Install requirements
+6. Install requirements
    ```bash
    pip install -r requirements.txt
+
 ## Step 4) Update settings.py for PythonAnywhere
 	nano scheduler/settings.py
 
