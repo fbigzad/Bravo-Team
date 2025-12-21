@@ -29,7 +29,7 @@ It includes **Daily / Weekly / Monthly** calendar views, a **schedule item detai
    git clone https://github.com/fbigzad/Bravo-Team.git
 2. Enter the Project Folder:
    ```bash
-   cd Bravo_Team
+   cd Bravo-Team
 3. create a virtual Environment
    ```bash
    python -m venv venv
